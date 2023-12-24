@@ -1,10 +1,14 @@
-import React from 'react';
-import { ClerkProvider } from '@clerk/nextjs';
 
 import type { Metadata } from 'next';
 // eslint-disable-next-line camelcase
 import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
+
+
+import React from 'react';
+import { ClerkProvider } from '@clerk/nextjs';
+import { ThemeProvider } from '@/context/ThemeProvider';
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -27,8 +31,8 @@ export const metadata: Metadata = {
   Explore topics in web development, mobile app 
   development, algorithm data structures, and more.`,
   icons: {
-    icon: ''
-    // icon: "/public/assets/images/site-logo.svg",
+    // icon: ''
+    icon: "/assets/images/site-logo.svg",
   }
 }
 
@@ -36,21 +40,21 @@ export default function RootLayout(
   { children }: { children: React.ReactNode }
 ) {
   return (
-    <ClerkProvider
-      appearance={{
-        elements: {
-          formButtonPrimary: 'primary-gradient',
-          footerActionLink: 'primary-text-gradient hover:text-primary-500',
-        }
-      }}
-    >
-      <html lang="en">
-        <body
-          className={`${inter.variable} ${spaceGrotesk.variable}`}
+    <html lang="en">
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+        <ClerkProvider
+          appearance={{
+            elements: {
+              formButtonPrimary: 'primary-gradient',
+              footerActionLink: 'primary-text-gradient hover:text-primary-500',
+            }
+          }}
         >
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   )
 }
