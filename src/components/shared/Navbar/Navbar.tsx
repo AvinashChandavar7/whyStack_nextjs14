@@ -13,10 +13,10 @@ const Navbar = () => {
     fixed z-50 w-full gap-5 p-6 shadow-light-300 sm:px-12
     dark:shadow-none'
     >
-      <Link href="/" className='flex items-center'>
+      <Link href="/" className='flex items-center gap-1'>
         <Image
           src={'/assets/images/site-logo.svg'}
-          alt='logo' width={23} height={23} loading='eager'
+          alt='DevFlow' width={23} height={23} loading='eager'
         />
 
         <p className='h2-bold pl-1 font-spaceGrotesk
