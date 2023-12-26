@@ -1,5 +1,7 @@
+import React from 'react';
+
 import Navbar from '@/components/shared/Navbar/Navbar';
-import React from 'react'
+import LeftSidebar from '@/components/shared/LeftSidebar';
 
 const RootLayout = (
   { children }: { children: React.ReactNode }
@@ -9,7 +11,7 @@ const RootLayout = (
       <Navbar />
 
       <div className='flex'>
-        LeftSidebar
+        <LeftSidebar />
 
         <section
           className='flex min-h-screen flex-1 flex-col 
@@ -23,7 +25,7 @@ const RootLayout = (
         RightSidebar
       </div>
 
-      Toaster
+      {/* Toaster */}
     </main>
   )
 }

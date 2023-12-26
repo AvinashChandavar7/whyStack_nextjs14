@@ -1,19 +1,22 @@
 "use client"
 
 import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+
+import { SignedOut } from '@clerk/nextjs';
 
 import {
   Sheet,
   SheetClose,
   SheetContent,
   SheetTrigger,
-} from "@/components/ui/sheet"
-import Link from 'next/link';
-import { SignedOut } from '@clerk/nextjs';
+} from "@/components/ui/sheet";
+
 import { Button } from '@/components/ui/button';
+
 import { sidebarLinks } from '@/constants';
-import { usePathname } from 'next/navigation';
 
 
 const MoblieNavContent = () => {
@@ -42,10 +45,6 @@ const MoblieNavContent = () => {
           )
         })
       }
-
-
-
-
     </section>
   );
 }
@@ -74,7 +73,7 @@ const MoblieNavbar = () => {
           </p>
         </Link>
 
-        <div className='flex'>
+        <div className='flex flex-col'>
 
           <SheetClose asChild>
             <MoblieNavContent />
