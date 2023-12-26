@@ -9,7 +9,7 @@ const HomeFilters = () => {
   const active = 'newest';
 
   return (
-    <div className='text-dark500_light700 mt-10 hidden flex-wrap gap-6 md:flex'>
+    <div className='text-dark500_light700 mt-6 hidden flex-wrap gap-4 md:flex'>
       {
         HomePageFilters.map((item) => (
           <Button key={item.value}

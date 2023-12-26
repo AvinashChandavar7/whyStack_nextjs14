@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 
 
 interface TagProps {
-  _id: number;
+  _id: string;
   name: string;
   totalQuestion?: number;
   showCount?: boolean;
