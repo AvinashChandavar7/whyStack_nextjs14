@@ -1,28 +1,27 @@
 "use client"
 
-import React from 'react';
-import { useForm } from "react-hook-form"
-
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
+import React, { useRef } from 'react';
+import { useForm } from "react-hook-form"
+import { Editor } from '@tinymce/tinymce-react';
 
 
-import { Button } from "@/components/ui/button"
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+  Form, FormControl, FormDescription, FormField, FormItem,
+  FormLabel, FormMessage,
+} from "@/components/ui/form";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
 import { QuestionsSchema } from '@/lib/validations';
 
 
 const QuestionForm = () => {
+
+  const editorRef = useRef(null);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
@@ -91,6 +90,28 @@ const QuestionForm = () => {
 
               <FormControl className='mt-3.5'>
                 {/* TODO: Add on Editor Component */}
+                <Editor
+                  apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+                  onInit={(evt, editor) => {
+                    // @ts-ignore
+                    editorRef.current = editor
+                  }}
+                  initialValue=""
+                  init={{
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                      'preview', 'anchor', 'searchreplace', 'visualblocks',
+                      'codesample', 'fullscreen', 'insertdatetime', 'media',
+                      'table', 'paste', 'code', 'help', 'wordcount'
+                    ],
+                    toolbar: 'undo redo | formatselect | ' +
+                      'codesample | bold italic forecolor backcolor | alignleft aligncenter ' +
+                      'alignright alignjustify | bullist numlist | ',
+                    content_style: 'body {font - family:Inter,sans-serif; font-size:16px }',
+                  }}
+                />
               </FormControl>
 
               <FormDescription className='body-regular mt-2.5 text-light-500'>
