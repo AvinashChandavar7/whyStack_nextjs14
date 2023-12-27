@@ -4,6 +4,7 @@ import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import React, { useRef } from 'react';
+import Image from "next/image";
 import { useForm } from "react-hook-form"
 import { Editor } from '@tinymce/tinymce-react';
 
@@ -15,13 +16,53 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "../ui/badge";
 
 import { QuestionsSchema } from '@/lib/validations';
+
 
 
 const QuestionForm = () => {
 
   const editorRef = useRef(null);
+
+  const handleInputKeyDown =
+    (e: React.KeyboardEvent<HTMLInputElement>, field: any) => {
+      if (e.key === 'Enter' && field.name === 'tags') {
+        e.preventDefault();
+
+        const tagInput = e.target as HTMLInputElement;
+        const tagValue = tagInput.value.trim();
+
+        if (tagValue !== '') {
+          if (tagValue.length > 15) {
+            return form.setError('tags', {
+              type: 'required',
+              message: 'Tag must be less than 15 characters.'
+            })
+          }
+
+          if (!field.value.includes(tagValue as never)) {
+            form.setValue('tags', [...field.value, tagValue]);
+            tagInput.value = '';
+            form.clearErrors('tags');
+          }
+
+
+        } else {
+          form.trigger();
+        }
+      }
+    };
+
+  const handleInputRemove = (tag: string, field: any) => {
+    const newTags = field.value.filter(
+      (t: string) => t !== tag
+    );
+
+    form.setValue('tags', newTags)
+  };
+
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
@@ -39,6 +80,8 @@ const QuestionForm = () => {
     // ✅ This will be type-safe and validated.
     console.log(values)
   }
+
+
 
 
   return (
@@ -135,13 +178,44 @@ const QuestionForm = () => {
               </FormLabel>
 
               <FormControl className='mt-3.5'>
-                <Input
-                  className='no-focus paragraph-regular background-light900_dark300
+                <>
+
+                  <Input
+                    className='no-focus paragraph-regular background-light900_dark300
                   light-border-2  text-dark300_light700 min-h-[56px] border
                   '
-                  placeholder="Add tags..."
-                  {...field}
-                />
+                    placeholder="Add tags..."
+                    // {...field}
+                    onKeyDown={(e) => handleInputKeyDown(e, field)}
+                  />
+
+                  {
+                    field.value.length > 0 && (
+                      <div className="flex-start mt-2.5 gap-2.5">
+                        {
+                          field.value.map((tag: any) => (
+                            <Badge
+                              key={tag}
+                              onClick={() => handleInputRemove(tag, field)}
+                              className="subtle-medium background-light800_dark300
+                              text-light400_light500 flex items-center justify-center
+                              gap-2 rounded-md border-none px-4 py-2 capitalize"
+
+                            >
+                              {tag}
+                              <Image
+                                src="/assets/icons/close.svg"
+                                alt="close icon"
+                                width={12} height={12}
+                                className="cursor-pointer object-contain invert-0 dark:invert"
+                              />
+                            </Badge>
+                          ))
+                        }
+                      </div>
+                    )
+                  }
+                </>
               </FormControl>
 
               <FormDescription className='body-regular mt-2.5 text-light-500'>
