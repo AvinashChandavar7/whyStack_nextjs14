@@ -11,7 +11,7 @@ export const sidebarLinks = [
   { label: 'Find Jobs', route: "/jobs", imgUrl: '/assets/icons/suitcase.svg' },
   { label: 'Tags', route: "/tags", imgUrl: '/assets/icons/tag.svg' },
   { label: 'Profile', route: "/profile", imgUrl: '/assets/icons/user.svg' },
-  { label: 'Ask a question', route: "/ask-a-question", imgUrl: '/assets/icons/question.svg' },
+  { label: 'Ask a question', route: "/ask-question", imgUrl: '/assets/icons/question.svg' },
 ];
 
 
