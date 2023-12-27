@@ -3,7 +3,7 @@
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from "next/image";
 import { useForm } from "react-hook-form"
 import { Editor } from '@tinymce/tinymce-react';
@@ -21,10 +21,13 @@ import { Badge } from "../ui/badge";
 import { QuestionsSchema } from '@/lib/validations';
 
 
+const type: any = "create";
 
 const QuestionForm = () => {
 
   const editorRef = useRef(null);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputKeyDown =
     (e: React.KeyboardEvent<HTMLInputElement>, field: any) => {
@@ -79,6 +82,21 @@ const QuestionForm = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
+
+    setIsSubmitting(true);
+    try {
+
+      // Make an async call to your API 
+      // -> create a Question contain all form data
+
+      // navigate to home page
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+
+
   }
 
 
@@ -228,10 +246,14 @@ const QuestionForm = () => {
         />
 
         <Button
-          type="submit"
-          className='bg-rose-500'
+          type="submit" disabled={isSubmitting}
+          className='primary-gradient w-fit !text-light-900'
         >
-          Submit
+          {
+            isSubmitting
+              ? (<> {type === 'edit' ? 'Editing...' : 'Posting...'}  </>)
+              : (<> {type === 'edit' ? 'Edit Question...' : 'Ask a Question'}  </>)
+          }
         </Button>
 
       </form>
