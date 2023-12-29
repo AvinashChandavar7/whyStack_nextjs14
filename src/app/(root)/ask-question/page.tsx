@@ -2,7 +2,9 @@ import React from 'react';
 
 import QuestionForm from '@/components/forms/QuestionForm';
 
-const Page = () => {
+const Page = async () => {
+
+
   return (
     <div>
 
