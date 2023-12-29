@@ -3,11 +3,14 @@
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import React, { useRef, useState } from 'react';
-import Image from "next/image";
-import { useForm } from "react-hook-form"
-import { Editor } from '@tinymce/tinymce-react';
+import { useForm } from "react-hook-form";
 
+import React, { useRef, useState } from 'react';
+
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+
+import { Editor } from '@tinymce/tinymce-react';
 
 import {
   Form, FormControl, FormDescription, FormField, FormItem,
@@ -19,14 +22,24 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "../ui/badge";
 
 import { QuestionsSchema } from '@/lib/validations';
+
 import { createQuestion } from "@/lib/actions/question.action";
 
 
 const type: any = "create";
 
-const QuestionForm = () => {
+interface QuestionFromProps {
+  mongoUserId: string;
+}
+
+const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
 
   const editorRef = useRef(null);
+
+  const router = useRouter();
+
+  const pathname = usePathname();
+  console.log(pathname);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -91,9 +104,17 @@ const QuestionForm = () => {
 
       // Make an async call to your API 
       // -> create a Question contain all form data
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId)
+      });
 
       // navigate to home page
+
+      router.push('/')
+
     } catch (error) {
       console.log(error);
     } finally {
