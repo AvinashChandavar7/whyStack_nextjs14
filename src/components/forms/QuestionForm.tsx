@@ -7,7 +7,7 @@ import React, { useRef, useState } from 'react';
 import Image from "next/image";
 import { useForm } from "react-hook-form"
 import { Editor } from '@tinymce/tinymce-react';
-
+import { usePathname, useRouter } from "next/navigation";
 
 import {
   Form, FormControl, FormDescription, FormField, FormItem,
@@ -19,14 +19,24 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "../ui/badge";
 
 import { QuestionsSchema } from '@/lib/validations';
+
 import { createQuestion } from "@/lib/actions/question.action";
 
 
 const type: any = "create";
 
-const QuestionForm = () => {
+
+interface Props {
+  mongoUserId: string;
+}
+
+const QuestionForm = ({ mongoUserId }: Props) => {
 
   const editorRef = useRef(null);
+
+  const route = useRouter();
+  // eslint-disable-next-line no-unused-vars
+  const pathname = usePathname();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -82,15 +92,23 @@ const QuestionForm = () => {
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    console.table(values)
 
     setIsSubmitting(true);
     try {
 
       // Make an async call to your API 
       // -> create a Question contain all form data
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+      });
+
       // navigate to home page
+      route.push('/');
+
     } catch (error) {
       console.log(error);
     } finally {

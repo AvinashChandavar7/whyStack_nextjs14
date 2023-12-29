@@ -1,8 +1,27 @@
 import React from 'react';
 
+import { redirect } from 'next/navigation';
+
+// import { auth } from '@clerk/nextjs';
+
 import QuestionForm from '@/components/forms/QuestionForm';
 
-const Page = () => {
+import { getUserById } from '@/lib/actions/user.action';
+
+const Page = async () => {
+
+  // const { userId } = auth();
+
+  const userId = '123456789';
+
+  if (!userId) {
+    redirect('/sign-in');
+  }
+
+  const mongoUser = await getUserById({ userId });
+
+  console.log(mongoUser);
+
   return (
     <div>
 
@@ -11,7 +30,9 @@ const Page = () => {
       </h1>
 
       <div className='text-dark400_light800 mt-9'>
-        <QuestionForm />
+        <QuestionForm
+          mongoUserId={JSON.stringify(mongoUser?._id)}
+        />
       </div>
 
     </div>
