@@ -60,7 +60,7 @@ export default async function Home() {
 
   const result = await getQuestions({});
 
-  console.log(result.questions);
+  // console.log(result.questions);
 
   return (
     <>

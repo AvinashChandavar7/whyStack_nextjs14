@@ -18,7 +18,7 @@ const Theme = () => {
 
 
   const { mode, setMode } = useTheme();
-  console.log('Theme Mode:', mode);
+  // console.log('Theme Mode:', mode);
 
   return (
     <Menubar className='relative border-none bg-transparent shadow-none'>

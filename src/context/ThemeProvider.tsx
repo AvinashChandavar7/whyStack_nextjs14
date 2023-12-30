@@ -39,7 +39,7 @@ export function ThemeProvider(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
-  console.log('ContextTheme Mode', mode);
+  // console.log('ContextTheme Mode', mode);
 
   return (
     <ThemeContext.Provider value={{ mode, setMode }}>

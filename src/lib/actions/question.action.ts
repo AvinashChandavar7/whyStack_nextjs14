@@ -1,5 +1,7 @@
 "use server"
 
+import { revalidatePath } from "next/cache";
+
 import { connectToDatabase } from "../mongoose";
 
 import Question from "@/database/question.model";
@@ -10,7 +12,7 @@ import {
   CreateQuestionParams,
   GetQuestionsParams
 } from "./shared.types";
-import { revalidatePath } from "next/cache";
+
 
 
 export async function getQuestions(params: GetQuestionsParams) {
@@ -22,6 +24,9 @@ export async function getQuestions(params: GetQuestionsParams) {
       .populate({ path: 'tags', model: Tag })
       .populate({ path: 'author', model: User })
       .sort({ createAt: -1 })
+
+
+    console.log({ questions });
 
     return { questions };
 
