@@ -13,54 +13,14 @@ import QuestionCard from "@/components/shared/Cards/QuestionCard";
 import { getQuestions } from "@/lib/actions/question.action";
 
 
-const questions = [
-  {
-    _id: "1",
-    title: "Cascading Deletes in SQLAlchemy?",
-    tags: [
-      { _id: "1", name: 'python' },
-      { _id: "2", name: 'sql' },
-      { _id: "3", name: 'database' }
-    ],
-    author: {
-      _id: "authorId1",
-      name: "John Doe",
-      picture: "url/to/picture1"
-    },
-    upvotes: 900000000,
-    views: 15000,
-    answers: [
-      {}, {}
-    ],
-    createdAt: new Date("2023-09-01T12:00:00.000Z"),
-  },
-  {
-    _id: "2",
-    title: "How to center a div?",
-    tags: [
-      { _id: "4", name: 'css' },
-      { _id: "5", name: 'html' },
-    ],
-    author: {
-      _id: "authorId2",
-      name: "John Doe",
-      picture: "url/to/picture2"
-    },
-    upvotes: 1056156545,
-    views: 100000000000,
-    answers: [
-      {}, {}
-    ],
-    createdAt: new Date("2021-09-01T12:00:00.000Z"),
-  },
-];
-
 export default async function Home() {
 
 
   const result = await getQuestions({});
 
-  console.log(result.questions[0].author);
+  const results = JSON.parse(JSON.stringify(result));
+
+  // console.log(results.questions);
 
   return (
     <>
@@ -104,8 +64,8 @@ export default async function Home() {
       {/* mt-10 flex w-full flex-col g6 */}
       <div className="mt-6 flex w-full flex-col gap-4">
         {
-          questions.length > 0 ? (
-            questions.map((question) => (
+          results.questions.length > 0 ? (
+            results.questions.map((question: any) => (
               <QuestionCard
                 key={question._id}
                 _id={question._id.toString()}
