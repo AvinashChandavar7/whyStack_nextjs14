@@ -95,7 +95,7 @@ const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    // console.log(values);
+    console.log(values);
     console.table(values);
 
     setIsSubmitting(true);
