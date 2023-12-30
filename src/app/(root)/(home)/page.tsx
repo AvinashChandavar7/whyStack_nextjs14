@@ -60,7 +60,7 @@ export default async function Home() {
 
   const result = await getQuestions({});
 
-  // console.log(result.questions[0].author);
+  console.log(result.questions[0].author);
 
   return (
     <>
@@ -104,8 +104,8 @@ export default async function Home() {
       {/* mt-10 flex w-full flex-col g6 */}
       <div className="mt-6 flex w-full flex-col gap-4">
         {
-          result.questions.length > 0 ? (
-            result.questions.map((question) => (
+          questions.length > 0 ? (
+            questions.map((question) => (
               <QuestionCard
                 key={question._id}
                 _id={question._id.toString()}
