@@ -4,13 +4,39 @@ import { connectToDatabase } from "../mongoose";
 
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
+import User from "@/database/user.model";
 
-export async function createQuestion(params: any) {
+import {
+  CreateQuestionParams,
+  GetQuestionsParams
+} from "./shared.types";
+import { revalidatePath } from "next/cache";
+
+
+export async function getQuestions(params: GetQuestionsParams) {
+  try {
+    connectToDatabase();
+
+
+    const questions = await Question.find({})
+      .populate({ path: 'tags', model: Tag })
+      .populate({ path: 'author', model: User })
+      .sort({ createAt: -1 })
+
+    return { questions };
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function createQuestion(params: CreateQuestionParams) {
   // eslint-disable-next-line no-empty
   try {
     connectToDatabase();
 
-    const { title, content, tags, author } = params;
+    const { title, content, tags, author, path } = params;
 
     // Create the question
 
@@ -57,7 +83,7 @@ export async function createQuestion(params: any) {
 
 
     // Increment the author's reputation by +5 for creating a question
-
+    revalidatePath(path);
 
   } catch (error) {
     console.log(error);
