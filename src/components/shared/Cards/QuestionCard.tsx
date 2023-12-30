@@ -69,10 +69,10 @@ const QuestionCard = (
       <div className='flex-between mt-6 w-full flex-wrap gap-3'>
         <Metric
           title={`- asked ${getTimeStamp(createdAt)}`}
-          value={author.name}
+          value={author?.name}
           imgUrl="/assets/icons/avatar.svg"
           alt="user"
-          href={`/profile/${author._id}`}
+          href={`/profile/${author?._id}`}
           isAuthor
           textStyles="body-medium text-dark400_light700"
         />
