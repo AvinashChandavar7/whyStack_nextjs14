@@ -8,6 +8,7 @@ export default authMiddleware({
   publicRoutes: [
     '/',
     '/api/webhook',
+    '/profile/:id',
   ],
   ignoredRoutes: [
     '/api/webhook',

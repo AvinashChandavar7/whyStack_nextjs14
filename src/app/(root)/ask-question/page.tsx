@@ -10,6 +10,8 @@ const Page = async () => {
 
   const { userId } = auth();
 
+  console.log(userId);
+
   // const userId = '123456789';
 
   if (!userId) {
