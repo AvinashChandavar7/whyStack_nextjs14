@@ -1,5 +1,5 @@
 import React from 'react';
-// import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 import QuestionForm from '@/components/forms/QuestionForm';
@@ -8,9 +8,9 @@ import { getUserById } from '@/lib/actions/user.action';
 
 const Page = async () => {
 
-  // const { userId } = auth();
+  const { userId } = auth();
 
-  const userId = '123456789';
+  // const userId = '123456789';
 
   if (!userId) {
     // console.log("UserId is missing");
