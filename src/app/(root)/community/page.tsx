@@ -1,15 +1,13 @@
-"use server"
-
 import React from 'react';
+import Link from 'next/link';
 
 import { getAllUsers } from '@/lib/actions/user.action';
 
 import Filter from '@/components/shared/Filter/Filter';
 import LocalSearchbar from '@/components/shared/Search/LocalSearchbar';
+import UserCard from '@/components/shared/Cards/UserCard';
 
 import { UserFilters } from '@/constants/filters';
-import Link from 'next/link';
-import UserCard from '@/components/shared/Cards/UserCard';
 
 
 
@@ -17,7 +15,7 @@ const Page = async () => {
 
   const result = await getAllUsers({});
 
-  console.log(result.users);
+  // console.log(result.users);
 
   return (
     <>
@@ -64,11 +62,6 @@ const Page = async () => {
             )
         }
       </section>
-
-
-
-
-
     </>
   )
 }

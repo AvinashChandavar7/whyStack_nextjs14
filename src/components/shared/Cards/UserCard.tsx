@@ -1,10 +1,12 @@
-import { Badge } from '@/components/ui/badge';
-import { getTopInteractedTags } from '@/lib/actions/tag.action';
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react'
-import RenderTag from '../Tags/RenderTag';
+import Link from 'next/link';
+import Image from 'next/image';
 
+import { getTopInteractedTags } from '@/lib/actions/tag.action';
+
+import { Badge } from '@/components/ui/badge';
+
+import RenderTag from '../Tags/RenderTag';
 
 interface UserProps {
   user: {
@@ -16,13 +18,11 @@ interface UserProps {
   }
 }
 
-
 const UserCard = async ({ user }: UserProps) => {
-
 
   const interactedTags = await getTopInteractedTags({ userId: user._id });
 
-  console.log(interactedTags);
+  // console.log(interactedTags);
 
   return (
     <Link href={`/profile/${user.clerkId}`}

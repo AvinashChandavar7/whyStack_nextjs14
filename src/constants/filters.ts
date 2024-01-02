@@ -5,7 +5,6 @@ export const HomePageFilters = [
   { name: "Unanswered", value: "unanswered" },
 ];
 
-
 export const UserFilters = [
   { name: 'New Users', value: 'new_users' },
   { name: 'Old Users', value: 'old_users' },

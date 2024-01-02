@@ -10,19 +10,16 @@ const Page = async () => {
 
   const { userId } = auth();
 
-  console.log(userId);
-
-  // const userId = '123456789';
+  // console.log(userId);
 
   if (!userId) {
-    // console.log("UserId is missing");
     redirect('/sign-in');
   }
 
   const mongoUser = await getUserById({ userId });
 
   // console.log("MongoUser", mongoUser);
-  console.log("MongoUser", mongoUser._id);
+  // console.log("MongoUser", mongoUser._id.toString());
 
   return (
     <div>
