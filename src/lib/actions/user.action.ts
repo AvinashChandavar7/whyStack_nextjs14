@@ -10,6 +10,7 @@ import { connectToDatabase } from "../mongoose"
 import {
   CreateUserParams,
   DeleteUserParams,
+  GetAllUsersParams,
   UpdateUserParams
 } from "./shared.types";
 
@@ -96,6 +97,38 @@ export async function deleteUser(deleteDataParams: DeleteUserParams) {
     const deleteUser = await User.findByIdAndDelete({ author: user._id });
 
     return deleteUser;
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+// Get All Users
+
+
+// export async function g(params: G) {
+//   try {
+//     connectToDatabase();
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// };
+
+export async function getAllUsers(allUserParam: GetAllUsersParams) {
+  try {
+    connectToDatabase();
+
+    // const { page = 1, pageSize = 20, filter, searchQuery
+    // } = allUserParam;
+
+    const users
+      = await User.find({}).sort({ createAt: -1 })
+
+
+    return { users };
 
   } catch (error) {
     console.log(error);
