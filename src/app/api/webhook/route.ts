@@ -15,6 +15,8 @@ export async function POST(req: Request) {
   // TODO: Add your webhook secret to .enc.local
   const WEBHOOK_SECRET = process.env.NEXT_CLERK_WEBHOOK_SECRET
 
+  console.log("WEBHOOK_SECRET =", WEBHOOK_SECRET);
+
   if (!WEBHOOK_SECRET) {
     throw new Error('Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local')
   }
@@ -62,60 +64,64 @@ export async function POST(req: Request) {
   console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
   console.log('Webhook body:', body)
 
-  if (eventType === 'user.created') {
-    const {
-      id, email_addresses, image_url,
-      username, first_name, last_name
-    } = evt.data;
+  try {
+    if (eventType === 'user.created') {
+      const {
+        id, email_addresses, image_url,
+        username, first_name, last_name
+      } = evt.data;
 
-    //  Create a new user in your database
+      //  Create a new user in your database
 
-    const mongoUser = await createUser({
-      clerkId: id,
-      name: `${first_name} ${last_name ? ` ${last_name}` : ''}`,
-      username: username!,
-      email: email_addresses[0].email_address,
-      picture: image_url
-    });
-
-    return NextResponse.json({ message: 'OK', user: mongoUser })
-  }
-
-  if (eventType === 'user.updated') {
-    const {
-      id, email_addresses, image_url,
-      username, first_name, last_name
-    } = evt.data;
-
-    //  Create a new user in your database
-
-    const updateMongoUser = await updateUser({
-      clerkId: id,
-      updateData: {
+      const mongoUser = await createUser({
+        clerkId: id,
         name: `${first_name} ${last_name ? ` ${last_name}` : ''}`,
         username: username!,
         email: email_addresses[0].email_address,
         picture: image_url
-      },
-      path: `/profile/${id}`
-    });
-
-    return NextResponse.json({ message: 'OK', user: updateMongoUser })
-  }
-
-  if (eventType === 'user.deleted') {
-    const { id } = evt.data;
-
-    //  Create a new user in your database
-
-    const deletedMongoUser =
-      await deleteUser({
-        clerkId: id!,
       });
 
-    return NextResponse.json({ message: 'OK', user: deletedMongoUser })
-  }
+      return NextResponse.json({ message: 'OK', user: mongoUser })
+    }
 
+    if (eventType === 'user.updated') {
+      const {
+        id, email_addresses, image_url,
+        username, first_name, last_name
+      } = evt.data;
+
+      // Update an existing user in your database
+      const updateMongoUser = await updateUser({
+        clerkId: id,
+        updateData: {
+          name: `${first_name} ${last_name ? ` ${last_name}` : ''}`,
+          username: username!,
+          email: email_addresses[0].email_address,
+          picture: image_url
+        },
+        path: `/profile/${id}`
+      });
+
+      return NextResponse.json({ message: 'OK', user: updateMongoUser })
+    }
+
+    if (eventType === 'user.deleted') {
+      const { id } = evt.data;
+
+      // Delete a user from your database
+
+      const deletedMongoUser =
+        await deleteUser({
+          clerkId: id!,
+        });
+
+      return NextResponse.json({ message: 'OK', user: deletedMongoUser })
+    }
+
+  } catch (error) {
+    console.error('Error processing Clerk webhook event:', error);
+    return NextResponse.json({ error: 'Error processing Clerk webhook event' }, { status: 500 });
+  }
 
   return new Response('', { status: 200 })
 }

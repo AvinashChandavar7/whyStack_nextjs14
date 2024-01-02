@@ -21,7 +21,11 @@ export async function getUserById(params: any) {
 
     const { userId } = params;
 
+    console.log(userId);
+
     const user = await User.findOne({ clerkId: userId });
+
+    console.log(user);
 
     return user;
 
@@ -62,6 +66,7 @@ export async function updateUser(updateDataParams: UpdateUserParams) {
     throw error;
   }
 };
+
 export async function deleteUser(deleteDataParams: DeleteUserParams) {
   try {
     connectToDatabase();
