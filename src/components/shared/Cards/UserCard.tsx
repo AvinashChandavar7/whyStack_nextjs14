@@ -1,6 +1,9 @@
+import { Badge } from '@/components/ui/badge';
+import { getTopInteractedTags } from '@/lib/actions/tag.action';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
+import RenderTag from '../Tags/RenderTag';
 
 
 interface UserProps {
@@ -14,7 +17,13 @@ interface UserProps {
 }
 
 
-const UserCard = ({ user }: UserProps) => {
+const UserCard = async ({ user }: UserProps) => {
+
+
+  const interactedTags = await getTopInteractedTags({ userId: user._id });
+
+  console.log(interactedTags);
+
   return (
     <Link href={`/profile/${user.clerkId}`}
       className='shadow-light100_darknone w-full 
@@ -24,8 +33,9 @@ const UserCard = ({ user }: UserProps) => {
       flex w-full flex-col items-center justify-center rounded-2xl border p-8
       '>
         <Image
-          src={user.picture ? "/assets/icons/user.svg" : user.picture} alt="user profile picture"
-          width={125} height={125}
+          src={user.picture ? "/assets/icons/user.svg" : user.picture}
+          alt="user profile picture"
+          width={100} height={100} loading='lazy'
           className='rounded-full border border-neutral-700 p-2'
         />
 
@@ -36,6 +46,27 @@ const UserCard = ({ user }: UserProps) => {
           <p className='body-regular text-dark500_light500 mt-2 '>
             @{user.username}
           </p>
+        </div>
+
+        <div className='mt-4'>
+          {interactedTags.length > 0 ?
+            (
+              <div className='flex items-center gap-2'>
+                {interactedTags.map((tag) =>
+                  <RenderTag
+                    key={tag._id}
+                    _id={tag._id.toString()}
+                    name={tag.name}
+                  />
+                )
+                }
+              </div>
+            ) : (
+              <Badge >
+                No Tags Yet
+              </Badge>
+            )
+          }
         </div>
       </article>
 

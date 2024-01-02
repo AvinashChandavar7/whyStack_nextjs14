@@ -1,3 +1,5 @@
+"use server"
+
 import React from 'react';
 
 import { getAllUsers } from '@/lib/actions/user.action';

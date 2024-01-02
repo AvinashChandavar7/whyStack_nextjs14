@@ -47,3 +47,9 @@ export interface GetAllUsersParams {
   filter?: string;
   searchQuery?: string; // Add searchQuery parameter
 }
+
+
+export interface GetTopInteractedTagsParams {
+  userId: string;
+  limit?: number;
+}
