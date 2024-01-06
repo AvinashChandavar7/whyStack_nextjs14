@@ -1,16 +1,18 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { getQuestionById } from '@/lib/actions/question.action';
 
-import ParseHTML from '@/components/shared/ParseHTML/ParseHTML';
-import Metric from '@/components/shared/Metric/Metric';
-
 import { getFormatValue, getTimeStamp } from '@/lib/utils';
-import RenderTag from '@/components/shared/Tags/RenderTag';
 
-const Page = async ({ params, searchParams }) => {
+import AnswerForm from '@/components/forms/AnswerForm';
+import Metric from '@/components/shared/Metric/Metric';
+import RenderTag from '@/components/shared/Tags/RenderTag';
+import ParseHTML from '@/components/shared/ParseHTML/ParseHTML';
+
+
+const Page = async ({ params, searchParams }: any) => {
 
   const result = await getQuestionById({ questionId: params.id })
 
@@ -95,6 +97,7 @@ const Page = async ({ params, searchParams }) => {
       </div>
 
 
+      <AnswerForm />
     </>
   )
 }
