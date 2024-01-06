@@ -12,6 +12,8 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { Editor } from '@tinymce/tinymce-react';
 
+import { useTheme } from "@/context/ThemeProvider";
+
 import {
   Form, FormControl, FormDescription, FormField, FormItem,
   FormLabel, FormMessage,
@@ -26,6 +28,7 @@ import { QuestionsSchema } from '@/lib/validations';
 import { createQuestion } from "@/lib/actions/question.action";
 
 
+
 const type: any = "create";
 
 interface QuestionFromProps {
@@ -33,6 +36,8 @@ interface QuestionFromProps {
 }
 
 const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
+
+  const { mode } = useTheme();
 
   const editorRef = useRef(null);
 
@@ -198,6 +203,8 @@ const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
                       'codesample | bold italic forecolor backcolor | alignleft aligncenter ' +
                       'alignright alignjustify | bullist numlist | ',
                     content_style: 'body {font - family:Inter,sans-serif; font-size:16px }',
+                    skin: (mode === 'dark' ? 'oxide-dark' : 'oxide'),
+                    content_css: (mode === 'dark' ? 'dark' : 'light'),
                   }}
                 />
               </FormControl>
