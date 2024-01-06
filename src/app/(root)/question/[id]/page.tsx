@@ -8,6 +8,7 @@ import ParseHTML from '@/components/shared/ParseHTML/ParseHTML';
 import Metric from '@/components/shared/Metric/Metric';
 
 import { getFormatValue, getTimeStamp } from '@/lib/utils';
+import RenderTag from '@/components/shared/Tags/RenderTag';
 
 const Page = async ({ params, searchParams }) => {
 
@@ -79,6 +80,21 @@ const Page = async ({ params, searchParams }) => {
 
 
       <ParseHTML data={result.content} />
+
+      <div className='mt-8 flex flex-wrap gap-2'>
+        {
+          result.tags.map((tag: any) => (
+            <RenderTag
+              key={tag._id}
+              _id={tag._id}
+              name={tag.name}
+              showCount={false}
+            />
+          ))
+        }
+      </div>
+
+
     </>
   )
 }
