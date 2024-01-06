@@ -11,6 +11,10 @@ export interface GetQuestionsParams {
   filter?: string;
 };
 
+export interface GetQuestionsByIdParams {
+  questionId: string;
+}
+
 export interface CreateQuestionParams {
   title: string;
   content: string;
