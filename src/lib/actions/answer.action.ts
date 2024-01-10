@@ -4,10 +4,13 @@ import { revalidatePath } from "next/cache";
 
 import { connectToDatabase } from "../mongoose";
 
-import { CreateAnswerParams } from "./shared.types";
-
 import Answer from "@/database/answer.model";
 import Question from "@/database/question.model";
+
+import {
+  CreateAnswerParams,
+  GetAnswerParams
+} from "./shared.types";
 
 
 export async function createAnswer(params: CreateAnswerParams) {
@@ -31,6 +34,28 @@ export async function createAnswer(params: CreateAnswerParams) {
     // TODO: Add interaction...
 
     revalidatePath(path);
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAnswer(params: GetAnswerParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId } = params;
+
+    console.log(questionId);
+
+    const answers = await Answer.find(
+      { question: questionId }
+    ).populate("author", "_id clerkId name picture"
+    ).sort({ createdAt: -1 })
+
+
+    return { answers };
 
   } catch (error) {
     console.log(error);
