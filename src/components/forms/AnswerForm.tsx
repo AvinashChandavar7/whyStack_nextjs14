@@ -26,7 +26,7 @@ const AnswerForm = () => {
   const { mode } = useTheme();
 
   // eslint-disable-next-line no-unused-vars
-  const [isSubmitting, setIsSubmitting] = useState();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const editorRef = useRef(null);
 
@@ -37,7 +37,17 @@ const AnswerForm = () => {
     }
   });
 
-  const handleCreateAnswer = () => { };
+  const handleCreateAnswer = async () => {
+    setIsSubmitting(true);
+    try {
+      // 
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+
+    }
+  };
 
   return (
     <div className='mt-4'>
