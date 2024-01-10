@@ -44,7 +44,8 @@ const Page = async ({ params, searchParams }: any) => {
             className='flex items-center justify-start gap-1'
           >
             <Image
-              src={result.author.picture ? "/assets/icons/avatar.svg" : result.author.picture}
+              // src={result.author.picture ? "/assets/icons/avatar.svg" : result.author.picture}
+              src={"/assets/icons/avatar.svg" || result.author.picture}
               alt='profile picture'
               width={22} height={22}
               className="rounded-full"

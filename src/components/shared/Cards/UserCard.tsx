@@ -33,7 +33,8 @@ const UserCard = async ({ user }: UserProps) => {
       flex w-full flex-col items-center justify-center rounded-2xl border p-8
       '>
         <Image
-          src={user.picture ? "/assets/icons/user.svg" : user.picture}
+          // src={user.picture ? "/assets/icons/user.svg" : user.picture}
+          src={"/assets/icons/avatar.svg" || user.picture}
           alt="user profile picture"
           width={100} height={100} loading='lazy'
           className='rounded-full border border-neutral-700 p-2'

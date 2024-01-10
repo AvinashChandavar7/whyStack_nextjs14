@@ -74,7 +74,8 @@ const AllAnswers = async (
                   </Link>
 
                   <div className='text-dark300_light700 flex justify-end '>
-                    VOTING <Votes />
+                    VOTING
+                    <Votes />
                   </div>
 
                 </div>
