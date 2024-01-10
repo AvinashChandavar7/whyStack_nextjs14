@@ -10,11 +10,21 @@ import AnswerForm from '@/components/forms/AnswerForm';
 import Metric from '@/components/shared/Metric/Metric';
 import RenderTag from '@/components/shared/Tags/RenderTag';
 import ParseHTML from '@/components/shared/ParseHTML/ParseHTML';
+import { auth } from '@clerk/nextjs';
+import { getUserById } from '@/lib/actions/user.action';
 
 
 const Page = async ({ params, searchParams }: any) => {
 
   const result = await getQuestionById({ questionId: params.id })
+
+  const { userId: clerkId } = auth();
+
+  let mongoUser;
+
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
+  }
 
   // console.log(result.title);
   // console.log(result.author.clerkId);
@@ -97,7 +107,11 @@ const Page = async ({ params, searchParams }: any) => {
       </div>
 
 
-      <AnswerForm />
+      <AnswerForm
+        question={result.content}
+        questionId={JSON.stringify(result._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   )
 }

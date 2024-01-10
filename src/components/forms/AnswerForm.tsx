@@ -21,9 +21,21 @@ import {
 
 import { Button } from '../ui/button';
 
-const AnswerForm = () => {
+import { createAnswer } from '@/lib/actions/answer.action';
+import { usePathname } from 'next/navigation';
+
+
+interface Props {
+  question: string;
+  questionId: string;
+  authorId: string;
+}
+
+const AnswerForm = ({ question, questionId, authorId }: Props) => {
 
   const { mode } = useTheme();
+
+  const pathname = usePathname();
 
   // eslint-disable-next-line no-unused-vars
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,15 +49,33 @@ const AnswerForm = () => {
     }
   });
 
-  const handleCreateAnswer = async () => {
+  const handleCreateAnswer = async (
+    values: z.infer<typeof AnswerSchema>
+  ) => {
     setIsSubmitting(true);
+
     try {
-      // 
+      await createAnswer({
+        content: values.answer,
+        author: JSON.parse(authorId),
+        question: JSON.parse(questionId),
+        path: pathname,
+      });
+
+      form.reset();
+
+
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+
+        editor.setContent('');
+      }
+
     } catch (error) {
       console.log(error);
+
     } finally {
       setIsSubmitting(false);
-
     }
   };
 
