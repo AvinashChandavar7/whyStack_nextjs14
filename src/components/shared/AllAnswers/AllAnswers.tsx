@@ -8,6 +8,7 @@ import { getTimeStamp } from '@/lib/utils';
 
 import { getAnswer } from '@/lib/actions/answer.action';
 
+import Votes from '../Votes/Votes';
 import Filter from '../Filter/Filter';
 import ParseHTML from '../ParseHTML/ParseHTML';
 
@@ -73,7 +74,7 @@ const AllAnswers = async (
                   </Link>
 
                   <div className='text-dark300_light700 flex justify-end '>
-                    VOTING
+                    VOTING <Votes />
                   </div>
 
                 </div>

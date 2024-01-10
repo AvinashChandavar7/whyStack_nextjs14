@@ -1,18 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { auth } from '@clerk/nextjs';
 
 import { getQuestionById } from '@/lib/actions/question.action';
 
 import { getFormatValue, getTimeStamp } from '@/lib/utils';
 
+import { getUserById } from '@/lib/actions/user.action';
+
 import AnswerForm from '@/components/forms/AnswerForm';
 import Metric from '@/components/shared/Metric/Metric';
 import RenderTag from '@/components/shared/Tags/RenderTag';
 import ParseHTML from '@/components/shared/ParseHTML/ParseHTML';
-import { auth } from '@clerk/nextjs';
-import { getUserById } from '@/lib/actions/user.action';
 import AllAnswers from '@/components/shared/AllAnswers/AllAnswers';
+import Votes from '@/components/shared/Votes/Votes';
 
 
 const Page = async ({ params, searchParams }: any) => {
@@ -54,7 +56,7 @@ const Page = async ({ params, searchParams }: any) => {
           </Link>
 
           <div className='text-dark300_light700 flex justify-end'>
-            VOTING
+            VOTING <Votes />
           </div>
 
         </div>
