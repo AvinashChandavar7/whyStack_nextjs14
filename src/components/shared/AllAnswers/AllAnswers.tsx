@@ -8,7 +8,7 @@ import { getTimeStamp } from '@/lib/utils';
 
 import { getAnswer } from '@/lib/actions/answer.action';
 
-// import Votes from '../Votes/Votes';
+import Votes from '../Votes/Votes';
 import Filter from '../Filter/Filter';
 import ParseHTML from '../ParseHTML/ParseHTML';
 
@@ -73,9 +73,16 @@ const AllAnswers = async (
                     </div>
                   </Link>
 
-                  <div className='text-dark300_light700 flex justify-end '>
-                    VOTING
-                    {/* <Votes /> */}
+                  <div className='flex justify-end '>
+                    <Votes
+                      type="Answer"
+                      itemId={JSON.stringify(answer._id)}
+                      userId={JSON.stringify(userId)}
+                      upvotes={answer.upvotes.length}
+                      downvotes={answer.downvotes.length}
+                      hasupVoted={answer.upvotes.includes(userId)}
+                      hasdownVoted={answer.downvotes.includes(userId)}
+                    />
                   </div>
 
                 </div>

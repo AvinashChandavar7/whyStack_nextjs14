@@ -10,6 +10,7 @@ import {
 import { getFormatValue } from '@/lib/utils';
 
 import { downVoteQuestion, upVoteQuestion } from '@/lib/actions/question.action';
+import { downVoteAnswer, upVoteAnswer } from '@/lib/actions/answer.action';
 
 interface VotesProps {
   type: string;
@@ -46,13 +47,13 @@ const Votes = ({
           path: pathname,
         })
       } else if (type === 'Answer') {
-        // await upVoteAnswer({
-        //   questionId: JSON.parse(itemId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted,
-        //   hasdownVoted,
-        //   path: pathname,
-        // })
+        await upVoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        })
       }
 
       // TODO: Show a Toast
@@ -71,13 +72,13 @@ const Votes = ({
           path: pathname,
         })
       } else if (type === 'Answer') {
-        // await downVoteAnswer({
-        //   questionId: JSON.parse(itemId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted,
-        //   hasdownVoted,
-        //   path: pathname,
-        // })
+        await downVoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        })
       }
 
       // TODO: Show a Toast
@@ -135,16 +136,19 @@ const Votes = ({
       </div>
 
       {/* saved */}
-      <Image
-        src={hasSaved
-          ? '/assets/icons/star-filled.svg'
-          : '/assets/icons/star-red.svg'
-        }
-        alt='saved' width={18} height={18}
-        className='cursor-pointer'
-        onClick={handleSave}
-      />
-
+      {
+        type === 'Question' && (
+          <Image
+            src={hasSaved
+              ? '/assets/icons/star-filled.svg'
+              : '/assets/icons/star-red.svg'
+            }
+            alt='saved' width={18} height={18}
+            className='cursor-pointer'
+            onClick={handleSave}
+          />
+        )
+      }
 
     </div>
   )
