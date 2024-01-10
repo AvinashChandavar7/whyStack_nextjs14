@@ -2,7 +2,14 @@
 
 import React from 'react'
 import Image from 'next/image';
+import {
+  usePathname,
+  // useRouter
+} from 'next/navigation';
+
 import { getFormatValue } from '@/lib/utils';
+
+import { downVoteQuestion, upVoteQuestion } from '@/lib/actions/question.action';
 
 interface VotesProps {
   type: string;
@@ -20,8 +27,65 @@ const Votes = ({
   hasdownVoted, hasSaved,
 }: VotesProps) => {
 
+  const pathname = usePathname();
 
-  const handleVote = (action: string) => { };
+  // const router = useRouter();
+
+  const handleVote = async (action: string) => {
+    if (!userId) {
+      return;
+    }
+
+    if (action === 'upvote') {
+      if (type === 'Question') {
+        await upVoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        })
+      } else if (type === 'Answer') {
+        // await upVoteAnswer({
+        //   questionId: JSON.parse(itemId),
+        //   userId: JSON.parse(userId),
+        //   hasupVoted,
+        //   hasdownVoted,
+        //   path: pathname,
+        // })
+      }
+
+      // TODO: Show a Toast
+      // return;
+    }
+
+
+
+    if (action === 'downvote') {
+      if (type === 'Question') {
+        await downVoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        })
+      } else if (type === 'Answer') {
+        // await downVoteAnswer({
+        //   questionId: JSON.parse(itemId),
+        //   userId: JSON.parse(userId),
+        //   hasupVoted,
+        //   hasdownVoted,
+        //   path: pathname,
+        // })
+      }
+
+      // TODO: Show a Toast
+      // return;
+    }
+
+
+  };
 
   const handleSave = () => { };
 
@@ -72,7 +136,7 @@ const Votes = ({
 
       {/* saved */}
       <Image
-        src={hasdownVoted
+        src={hasSaved
           ? '/assets/icons/star-filled.svg'
           : '/assets/icons/star-red.svg'
         }

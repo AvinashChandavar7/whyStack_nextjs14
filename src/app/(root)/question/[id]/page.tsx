@@ -57,7 +57,7 @@ const Page = async ({ params, searchParams }: any) => {
 
           <div className='text-dark300_light700 flex justify-end'>
             <Votes
-              type="question"
+              type="Question"
               itemId={JSON.stringify(result._id)}
               userId={JSON.stringify(mongoUser._id)}
               upvotes={result.upvotes.length}
