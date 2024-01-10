@@ -56,7 +56,16 @@ const Page = async ({ params, searchParams }: any) => {
           </Link>
 
           <div className='text-dark300_light700 flex justify-end'>
-            VOTING <Votes />
+            <Votes
+              type="question"
+              itemId={JSON.stringify(result._id)}
+              userId={JSON.stringify(mongoUser._id)}
+              upvotes={result.upvotes.length}
+              downvotes={result.downvotes.length}
+              hasupVoted={result.upvotes.includes(mongoUser._id)}
+              hasdownVoted={result.downvotes.includes(mongoUser._id)}
+              hasSaved={mongoUser?.saved.includes(result._id)}
+            />
           </div>
 
         </div>
