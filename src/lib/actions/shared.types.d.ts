@@ -73,6 +73,13 @@ export interface GetAllTagsParams {
   filter?: string;
   searchQuery?: string;
 }
+export interface ToggleSaveQuestionParams {
+  userId: string;
+  questionId: string;
+  path: string;
+}
+
+
 
 
 // answer 

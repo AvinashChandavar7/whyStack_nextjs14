@@ -11,6 +11,7 @@ import {
   CreateUserParams,
   DeleteUserParams,
   GetAllUsersParams,
+  ToggleSaveQuestionParams,
   UpdateUserParams
 } from "./shared.types";
 
@@ -104,19 +105,6 @@ export async function deleteUser(deleteDataParams: DeleteUserParams) {
   }
 };
 
-
-// Get All Users
-
-
-// export async function g(params: G) {
-//   try {
-//     connectToDatabase();
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// };
-
 export async function getAllUsers(allUserParam: GetAllUsersParams) {
   try {
     connectToDatabase();
@@ -129,6 +117,45 @@ export async function getAllUsers(allUserParam: GetAllUsersParams) {
 
 
     return { users };
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { userId, questionId, path } = params;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error('User not Found');
+    }
+
+    const isQuestionSaved = user.saved.includes(questionId);
+
+    if (isQuestionSaved) {
+      await User.findByIdAndUpdate(
+        userId,
+        { $pull: { saved: questionId } },
+        { new: true },
+      )
+    } else {
+      // add question to saved
+      await User.findByIdAndUpdate(
+        userId,
+        { $addToSet: { saved: questionId } },
+        { new: true },
+      )
+    }
+
+
+    revalidatePath(path);
 
   } catch (error) {
     console.log(error);
