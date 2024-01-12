@@ -1,17 +1,15 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image';
-import {
-  usePathname,
-  // useRouter
-} from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { getFormatValue } from '@/lib/utils';
 
 import { downVoteQuestion, upVoteQuestion } from '@/lib/actions/question.action';
 import { downVoteAnswer, upVoteAnswer } from '@/lib/actions/answer.action';
 import { toggleSaveQuestion } from '@/lib/actions/user.action';
+import { viewQuestion } from '@/lib/actions/interaction.action';
 
 interface VotesProps {
   type: string;
@@ -31,7 +29,7 @@ const Votes = ({
 
   const pathname = usePathname();
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const handleVote = async (action: string) => {
     if (!userId) {
@@ -97,6 +95,16 @@ const Votes = ({
     })
 
   };
+
+
+  useEffect(() => {
+    viewQuestion({
+      questionId: JSON.parse(itemId),
+      userId: userId ? JSON.parse(userId) : undefined,
+    });
+
+
+  }, [itemId, userId, pathname, router]);
 
 
   return (

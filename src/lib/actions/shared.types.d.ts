@@ -113,3 +113,11 @@ export interface AnswerVoteParams {
   hasdownVoted?: boolean;
   path: string;
 }
+
+
+// view
+
+export interface ViewQuestionParams {
+  questionId: string;
+  userId: string | undefined;
+}
