@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { TagFilters } from '@/constants/filters';
+
 import { getAllTags } from '@/lib/actions/tag.action';
 
-import LocalSearchbar from '@/components/shared/Search/LocalSearchbar';
 import Filter from '@/components/shared/Filter/Filter';
-
-import { TagFilters } from '@/constants/filters';
 import TagCard from '@/components/shared/Cards/TagCard';
+import NoResult from '@/components/shared/NoResult/NoResult';
+import LocalSearchbar from '@/components/shared/Search/LocalSearchbar';
 
 
 const Page = async () => {
@@ -24,10 +25,10 @@ const Page = async () => {
       max-sm:flex-col sm:items-center "
       >
         <LocalSearchbar
-          route="/community"
+          route="/tags"
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
-          placeholder="Search for amazing minds..."
+          placeholder="Search for tags..."
           otherClasses="flex-1"
         />
 
@@ -47,11 +48,12 @@ const Page = async () => {
               />
             ))
             ) : (
-              <div className='h1-bold text-dark200_light800
-              mx-auto mt-8 max-w-4xl text-center'
-              >
-                <p>No Tags Yet</p>
-              </div>
+              <NoResult
+                title="No Tags Found"
+                description="It looks like there are no tags found."
+                link="/ask-question"
+                linkTitle="Ask a Question"
+              />
             )
         }
       </section>
