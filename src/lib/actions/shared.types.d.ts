@@ -61,18 +61,6 @@ export interface GetAllUsersParams {
   searchQuery?: string; // Add searchQuery parameter
 }
 
-
-export interface GetTopInteractedTagsParams {
-  userId: string;
-  limit?: number;
-}
-
-export interface GetAllTagsParams {
-  page?: number;
-  pageSize?: number;
-  filter?: string;
-  searchQuery?: string;
-}
 export interface ToggleSaveQuestionParams {
   userId: string;
   questionId: string;
@@ -112,6 +100,28 @@ export interface AnswerVoteParams {
   hasupVoted?: boolean;
   hasdownVoted?: boolean;
   path: string;
+}
+
+
+// Tags
+export interface GetAllTagsParams {
+  page?: number;
+  pageSize?: number;
+  filter?: string;
+  searchQuery?: string;
+}
+
+export interface GetTopInteractedTagsParams {
+  userId: string;
+  limit?: number;
+}
+
+
+export interface GetQuestionsByTagIdParams {
+  tagId: string;
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
 }
 
 
