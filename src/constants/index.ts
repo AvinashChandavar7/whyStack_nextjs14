@@ -4,16 +4,27 @@ export const themes = [
   { value: "system", label: 'System', icon: '/assets/icons/computer.svg' },
 ];
 
+
 export const sidebarLinks = [
-  { label: 'Home', route: "/", imgUrl: '/assets/icons/home.svg' },
-  { label: 'Community', route: "/community", imgUrl: '/assets/icons/users.svg' },
-  { label: 'Collection', route: "/collection", imgUrl: '/assets/icons/star.svg' },
-  { label: 'Find Jobs', route: "/jobs", imgUrl: '/assets/icons/suitcase.svg' },
-  { label: 'Tags', route: "/tags", imgUrl: '/assets/icons/tag.svg' },
-  { label: 'Profile', route: "/profile", imgUrl: '/assets/icons/user.svg' },
-  { label: 'Ask a question', route: "/ask-question", imgUrl: '/assets/icons/question.svg' },
+  { label: 'Home', route: "/", imgUrl: '/assets/icons/home.svg', title: 'Go to Home' },
+  { label: 'Community', route: "/community", imgUrl: '/assets/icons/users.svg', title: 'Visit Community' },
+  { label: 'Collection', route: "/collection", imgUrl: '/assets/icons/star.svg', title: 'Explore Collection' },
+  { label: 'Find Jobs', route: "/jobs", imgUrl: '/assets/icons/suitcase.svg', title: 'Find Jobs' },
+  { label: 'Tags', route: "/tags", imgUrl: '/assets/icons/tag.svg', title: 'Browse Tags' },
+  { label: 'Profile', route: "/profile", imgUrl: '/assets/icons/user.svg', title: 'View Profile' },
+  { label: 'Ask a question', route: "/ask-question", imgUrl: '/assets/icons/question.svg', title: 'Ask a Question' },
 ];
 
+
+// export const sidebarLinks = [
+//   { label: 'Home', route: "/", imgUrl: '/assets/icons/home.svg' },
+//   { label: 'Community', route: "/community", imgUrl: '/assets/icons/users.svg' },
+//   { label: 'Collection', route: "/collection", imgUrl: '/assets/icons/star.svg' },
+//   { label: 'Find Jobs', route: "/jobs", imgUrl: '/assets/icons/suitcase.svg' },
+//   { label: 'Tags', route: "/tags", imgUrl: '/assets/icons/tag.svg' },
+//   { label: 'Profile', route: "/profile", imgUrl: '/assets/icons/user.svg' },
+//   { label: 'Ask a question', route: "/ask-question", imgUrl: '/assets/icons/question.svg' },
+// ];
 
 
 /** RightSidebar Static data
