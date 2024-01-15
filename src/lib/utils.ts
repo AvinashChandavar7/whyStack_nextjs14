@@ -93,3 +93,19 @@ export const getFormatValue = (value: number): string => {
     return `${value}`;
   }
 };
+
+
+export const getJoinedDate = (date: Date | string | null | undefined): string => {
+  if (!date || isNaN(new Date(date).getTime())) {
+    return 'Invalid Date';
+  }
+
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+
+  const month = dateObj.toLocaleString('default', { month: 'short' });
+  const year = dateObj.getFullYear();
+
+  const joinedDate: string = `${month} ${year}`;
+
+  return joinedDate;
+};

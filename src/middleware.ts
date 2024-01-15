@@ -11,14 +11,14 @@ export default authMiddleware({
     'question/:id',
     '/tags',
     '/tags/:id',
-    '/profile/:id',
+    '/profile/[id]',
     '/community',
     '/jobs',
   ],
   ignoredRoutes: [
     '/api/webhook',
     '/api/chatgpt',
-    '/profile/:id',
+    '/profile/[id]',
   ],
 });
 

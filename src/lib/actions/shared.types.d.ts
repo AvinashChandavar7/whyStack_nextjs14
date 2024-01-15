@@ -74,6 +74,9 @@ export interface GetSavedQuestionsParams {
   searchQuery?: string;
 }
 
+export interface GetUserByIdParams {
+  userId: string;
+}
 
 
 
