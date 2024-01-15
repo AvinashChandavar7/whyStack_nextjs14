@@ -78,6 +78,14 @@ export interface GetUserByIdParams {
   userId: string;
 }
 
+// user profile
+
+export interface GetUserStatsParams {
+  userId: string;
+  page?: number;
+  pageSize?: number;
+}
+
 
 
 

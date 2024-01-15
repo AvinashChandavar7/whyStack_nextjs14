@@ -30,7 +30,7 @@ const Page = async () => {
 
       <div className='text-dark400_light800 mt-9'>
         <QuestionForm
-          mongoUserId={JSON.stringify(mongoUser._id)}
+          mongoUserId={JSON.stringify(mongoUser?._id)}
         />
       </div>
 

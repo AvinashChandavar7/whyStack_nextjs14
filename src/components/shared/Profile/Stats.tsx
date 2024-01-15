@@ -22,10 +22,10 @@ const StatsCard = ({ imgUrl, title, value }: StatsCardProps) => {
       <Image src={imgUrl} alt={title} width={40} height={50} />
 
       <div>
-        <p className='paragraph-semibold text-dark200_light900'>
+        <p className='paragraph-semibold text-dark200_light900 text-center'>
           {value}
         </p>
-        <p className='body-medium text-dark400_light700'>
+        <p className='body-medium text-dark400_light700 mt-1'>
           {title}
         </p>
       </div>
@@ -43,25 +43,26 @@ const Stats = ({ totalQuestion, totalAnswer }: StatsProps) => {
 
       <div className='mt-5 grid grid-cols-1 gap-5 
       xs:grid-cols-2 md:grid-cols-4'>
+
         <div className='light-border background-light900_dark300
-        flex flex-wrap items-center justify-evenly gap-4 rounded-md
+        flex flex-wrap  items-center justify-evenly gap-4 rounded-md
         border p-6 shadow-lime-300 dark:shadow-dark-200
         '>
 
-          <div className=''>
-            <p className='paragraph-semibold text-dark200_light900'>
+          <div className='md:min-w-[150px] '>
+            <p className='paragraph-semibold text-dark200_light900 text-center'>
               {getFormatValue(totalQuestion)}
             </p>
-            <p className='body-medium text-dark400_light700'>
+            <p className='body-medium text-dark400_light700 mt-2 text-center '>
               Questions
             </p>
           </div>
 
           <div className=''>
-            <p className='paragraph-semibold text-dark200_light900'>
+            <p className='paragraph-semibold text-dark200_light900 text-center '>
               {getFormatValue(totalAnswer)}
             </p>
-            <p className='body-medium text-dark400_light700'>
+            <p className='body-medium text-dark400_light700 mt-2 text-center '>
               Answers
             </p>
           </div>
