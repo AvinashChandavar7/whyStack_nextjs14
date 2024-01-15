@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getJoinedDate } from '@/lib/utils';
-import ProfileLink from '@/components/shared/ProfileLink/ProfileLink';
+import ProfileLink from '@/components/shared/Profile/ProfileLink';
 
 
 const Page = async ({ params, searchParams }: URLProps) => {
