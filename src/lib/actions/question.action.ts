@@ -4,16 +4,22 @@ import { revalidatePath } from "next/cache";
 
 import { connectToDatabase } from "../mongoose";
 
-import Question from "@/database/question.model";
-import Tag from "@/database/tag.model";
-import User from "@/database/user.model";
-
 import {
   CreateQuestionParams,
+  DeleteQuestionParams,
+  EditQuestionParams,
   GetQuestionsByIdParams,
   GetQuestionsParams,
   QuestionVoteParams
 } from "./shared.types";
+
+
+import Tag from "@/database/tag.model";
+import User from "@/database/user.model";
+import Answer from "@/database/answer.model";
+import Question from "@/database/question.model";
+import Interaction from "@/database/interaction.model";
+
 
 
 
@@ -156,7 +162,6 @@ export async function upVoteQuestion(params: QuestionVoteParams) {
   }
 }
 
-
 export async function downVoteQuestion(params: QuestionVoteParams) {
   try {
     connectToDatabase();
@@ -194,6 +199,42 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
 
     revalidatePath(path);
 
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function editQuestion(params: EditQuestionParams) {
+  try {
+    connectToDatabase();
+
+
+
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function deleteQuestion(params: DeleteQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId, path } = params;
+
+    await Question.deleteOne({ _id: questionId });
+    await Answer.deleteMany({ question: questionId });
+    await Interaction.deleteMany({ question: questionId });
+
+    await Tag.updateMany(
+      { question: questionId },
+      { $pull: { question: questionId } }
+    );
+
+    revalidatePath(path);
 
   } catch (error) {
     console.log(error);

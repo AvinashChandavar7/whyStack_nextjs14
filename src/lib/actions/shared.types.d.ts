@@ -31,6 +31,20 @@ export interface QuestionVoteParams {
   path: string;
 }
 
+// Question Edit and Delete
+export interface EditQuestionParams {
+  questionId: string;
+  title: string;
+  content: string;
+  path: string;
+}
+export interface DeleteQuestionParams {
+  questionId: string;
+  path: string;
+}
+
+
+
 
 // User interface
 
@@ -112,6 +126,14 @@ export interface AnswerVoteParams {
   hasdownVoted?: boolean;
   path: string;
 }
+
+// answer edit and delete 
+
+export interface DeleteAnswerParams {
+  answerId: string;
+  path: string;
+}
+
 
 
 // Tags

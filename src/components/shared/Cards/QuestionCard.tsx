@@ -2,11 +2,14 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { SignedIn } from '@clerk/nextjs';
+
+import { getFormatValue, getTimeStamp } from '@/lib/utils';
 
 import RenderTag from '../Tags/RenderTag';
 import Metric from '../Metric/Metric';
+import EditDeleteAction from '../Profile/EditDeleteAction';
 
-import { getFormatValue, getTimeStamp } from '@/lib/utils';
 
 
 interface QuestionCardProps {
@@ -19,6 +22,7 @@ interface QuestionCardProps {
   }[];
   author: {
     _id: string,
+    clerkId?: string | null | undefined;
     name: string,
     picture: string
   };
@@ -35,6 +39,7 @@ const QuestionCard = (
 ) => {
 
 
+  const showActionButtons = clerkId && clerkId === author?.clerkId;
 
 
   return (
@@ -56,6 +61,17 @@ const QuestionCard = (
         </div>
 
         {/* if signed-in [Add, Edit, Delete Actions] */}
+
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction
+              type="Question"
+              itemId={JSON.stringify(_id)}
+            />
+          )}
+        </SignedIn>
+
+
 
       </div>
 

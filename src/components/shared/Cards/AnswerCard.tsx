@@ -2,10 +2,12 @@
 
 import React from 'react';
 import Link from 'next/link';
-
-import Metric from '../Metric/Metric';
+import { SignedIn } from '@clerk/nextjs';
 
 import { getFormatValue, getTimeStamp } from '@/lib/utils';
+
+import Metric from '../Metric/Metric';
+import EditDeleteAction from '../Profile/EditDeleteAction';
 
 
 interface QuestionCardProps {
@@ -33,6 +35,10 @@ const AnswerCard = (
   }: QuestionCardProps
 ) => {
 
+
+  const showActionButtons = clerkId && clerkId === author?.clerkId;
+
+
   return (
     <Link href={`/question/${question?._id}/#${_id}`}
       className='card-wrapper rounded-[10px] px-11 py-9'>
@@ -53,6 +59,16 @@ const AnswerCard = (
 
         </div>
 
+        {/* if signed-in [Add, Edit, Delete Actions] */}
+
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction
+              type="Answer"
+              itemId={JSON.stringify(_id)}
+            />
+          )}
+        </SignedIn>
 
       </div>
 
