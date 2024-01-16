@@ -25,17 +25,23 @@ import { Badge } from "../ui/badge";
 
 import { QuestionsSchema } from '@/lib/validations';
 
-import { createQuestion } from "@/lib/actions/question.action";
+import {
+  createQuestion, editQuestion,
+} from "@/lib/actions/question.action";
 
-
-
-const type: any = "create";
 
 interface QuestionFromProps {
+  type?: string;
   mongoUserId: string;
+  questionDetails?: string;
 }
+// const type: any = "create";
 
-const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
+const QuestionForm = ({
+  type,
+  mongoUserId,
+  questionDetails
+}: QuestionFromProps) => {
 
   const { mode } = useTheme();
 
@@ -46,6 +52,12 @@ const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
   const pathname = usePathname();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const parsedQuestionDetails = JSON.parse(questionDetails || "");
+
+  // console.log(parsedQuestionDetails);
+
+  const groupedTags = parsedQuestionDetails.tags.map((tag: any) => tag.name)
 
   const handleInputKeyDown =
     (e: React.KeyboardEvent<HTMLInputElement>, field: any) => {
@@ -89,9 +101,12 @@ const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
-      title: "",
-      explanation: "",
-      tags: [],
+      title: parsedQuestionDetails.title || '',
+      explanation: parsedQuestionDetails.content || '',
+      tags: groupedTags || [],
+      // title: "",
+      // explanation: "",
+      // tags: [],
     },
   })
 
@@ -99,26 +114,40 @@ const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
-    console.table(values);
+    // console.log(values);
+    // console.table(values);
 
     setIsSubmitting(true);
 
     try {
 
-      // Make an async call to your API 
-      // -> create a Question contain all form data
-      await createQuestion({
-        title: values.title,
-        content: values.explanation,
-        tags: values.tags,
-        author: JSON.parse(mongoUserId),
-        path: pathname,
-      });
+      if (type === 'Edit') {
 
-      // navigate to home page
+        await editQuestion({
+          questionId: parsedQuestionDetails._id,
+          title: values.title,
+          content: values.explanation,
+          path: pathname
+        })
 
-      router.push('/')
+
+        router.push(`/question/${parsedQuestionDetails._id}`)
+      }
+      else {
+
+        // Make an async call to your API 
+        // -> create a Question contain all form data
+        await createQuestion({
+          title: values.title,
+          content: values.explanation,
+          tags: values.tags,
+          author: JSON.parse(mongoUserId),
+          path: pathname,
+        });
+
+        // navigate to home page
+        router.push('/')
+      }
 
     } catch (error) {
       console.log(error);
@@ -189,7 +218,8 @@ const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
                   }}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue=""
+                  initialValue={parsedQuestionDetails.content || ''}
+                  // initialValue={''}
                   init={{
                     height: 500,
                     menubar: false,
@@ -233,6 +263,7 @@ const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
                 <>
 
                   <Input
+                    disabled={type === 'Edit'}
                     className='no-focus paragraph-regular background-light900_dark300
                   light-border-2  text-dark300_light700 min-h-[56px] border
                   '
@@ -248,19 +279,26 @@ const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
                           field.value.map((tag: any) => (
                             <Badge
                               key={tag}
-                              onClick={() => handleInputRemove(tag, field)}
+                              // onClick={() => handleInputRemove(tag, field)}
+                              onClick={() =>
+                                type !== 'Edit' ? handleInputRemove(tag, field) : () => { }
+                              }
                               className="subtle-medium background-light800_dark300
                               text-light400_light500 flex items-center justify-center
                               gap-2 rounded-md border-none px-4 py-2 capitalize"
 
                             >
                               {tag}
-                              <Image
-                                src="/assets/icons/close.svg"
-                                alt="close icon"
-                                width={12} height={12}
-                                className="cursor-pointer object-contain invert-0 dark:invert"
-                              />
+                              {
+                                type !== 'Edit' && (
+                                  <Image
+                                    src="/assets/icons/close.svg"
+                                    alt="close icon"
+                                    width={12} height={12}
+                                    className="cursor-pointer object-contain invert-0 dark:invert"
+                                  />)
+                              }
+
                             </Badge>
                           ))
                         }
@@ -281,12 +319,12 @@ const QuestionForm = ({ mongoUserId }: QuestionFromProps) => {
 
         <Button
           type="submit" disabled={isSubmitting}
-          className='primary-gradient w-fit !text-light-900'
+          className='primary-gradient w-full !text-light-900'
         >
           {
             isSubmitting
-              ? (<> {type === 'edit' ? 'Editing...' : 'Posting...'}  </>)
-              : (<> {type === 'edit' ? 'Edit Question...' : 'Ask a Question'}  </>)
+              ? (<> {type === 'Edit' ? 'Editing...' : 'Posting...'}  </>)
+              : (<> {type === 'Edit' ? 'Edit Question' : 'Ask a Question'}  </>)
           }
         </Button>
 
