@@ -53,11 +53,13 @@ const QuestionForm = ({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const parsedQuestionDetails = JSON.parse(questionDetails || "");
+  const parsedQuestionDetails = JSON.parse(JSON.stringify(questionDetails || ""));
 
   // console.log(parsedQuestionDetails);
 
-  const groupedTags = parsedQuestionDetails.tags.map((tag: any) => tag.name)
+  const groupedTags = parsedQuestionDetails?.tags?.map((tag: any) => tag.name)
+
+  // console.log(groupedTags)
 
   const handleInputKeyDown =
     (e: React.KeyboardEvent<HTMLInputElement>, field: any) => {
