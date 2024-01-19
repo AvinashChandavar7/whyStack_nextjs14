@@ -8,11 +8,14 @@ import Filter from '@/components/shared/Filter/Filter';
 import TagCard from '@/components/shared/Cards/TagCard';
 import NoResult from '@/components/shared/NoResult/NoResult';
 import LocalSearchbar from '@/components/shared/Search/LocalSearchbar';
+import { SearchParamsProps } from '@/types';
 
 
-const Page = async () => {
+const Page = async ({ searchParams }: SearchParamsProps) => {
 
-  const result = await getAllTags({});
+  const result = await getAllTags({
+    searchQuery: searchParams.q,
+  });
   // console.log(result.tags);
 
   return (

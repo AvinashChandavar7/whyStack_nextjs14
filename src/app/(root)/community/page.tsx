@@ -9,11 +9,14 @@ import UserCard from '@/components/shared/Cards/UserCard';
 
 import { UserFilters } from '@/constants/filters';
 
+import { SearchParamsProps } from '@/types';
 
 
-const Page = async () => {
+const Page = async ({ searchParams }: SearchParamsProps) => {
 
-  const result = await getAllUsers({});
+  const result = await getAllUsers(
+    { searchQuery: searchParams.q }
+  );
 
   // console.log(result.users);
 

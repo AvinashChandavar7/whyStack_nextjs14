@@ -9,16 +9,18 @@ import NoResult from "@/components/shared/NoResult/NoResult";
 import QuestionCard from "@/components/shared/Cards/QuestionCard";
 
 import { getSavedQuestions } from "@/lib/actions/user.action";
+import { SearchParamsProps } from "@/types";
 
 
-export default async function Home() {
+export default async function Home({ searchParams }: SearchParamsProps) {
 
   const { userId } = auth();
 
   if (!userId) return null;
 
   const result = await getSavedQuestions({
-    clerkId: userId
+    clerkId: userId,
+    searchQuery: searchParams.q,
   });
 
   const results = JSON.parse(JSON.stringify(result));
@@ -36,7 +38,7 @@ export default async function Home() {
       max-sm:flex-col sm:items-center "
       >
         <LocalSearchbar
-          route="/"
+          route="/collection"
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
           placeholder="Search ..."

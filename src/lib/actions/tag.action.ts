@@ -47,9 +47,18 @@ export async function getAllTags(getTagsParams: GetAllTagsParams) {
   try {
     connectToDatabase();
 
+    const { searchQuery } = getTagsParams;
+
+    const query: FilterQuery<typeof Tag> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { name: { $regex: new RegExp(searchQuery, "i") } },
+      ]
+    }
 
     const tags
-      = await Tag.find({}).sort({ createAt: -1 })
+      = await Tag.find(query).sort({ createdAt: -1 })
 
     if (!tags) {
       throw new Error("User not found");

@@ -12,11 +12,17 @@ import QuestionCard from "@/components/shared/Cards/QuestionCard";
 
 import { getQuestions } from "@/lib/actions/question.action";
 
+import { SearchParamsProps } from "@/types";
 
-export default async function Home() {
+
+export default async function Home({ searchParams }: SearchParamsProps) {
 
 
-  const result = await getQuestions({});
+  // const result = await getQuestions({});
+
+  const result = await getQuestions({
+    searchQuery: searchParams.q,
+  });
 
   const results = JSON.parse(JSON.stringify(result));
 
