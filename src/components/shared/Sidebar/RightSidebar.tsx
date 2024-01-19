@@ -5,21 +5,13 @@ import Image from 'next/image';
 import RenderTag from '../Tags/RenderTag';
 
 import { getHotQuestions } from '@/lib/actions/question.action';
-
-
-
-const popularTags = [
-  { _id: "1", name: "javaScript", totalQuestion: 5 },
-  { _id: "2", name: "react", totalQuestion: 4 },
-  { _id: "3", name: "nextjs", totalQuestion: 3 },
-  { _id: "4", name: "nodejs", totalQuestion: 2 },
-  { _id: "5", name: "vue-js", totalQuestion: 1 },
-];
+import { getTopPopularTags } from '@/lib/actions/tag.action';
 
 
 const RightSidebar = async () => {
 
   const hotQuestions = await getHotQuestions();
+  const popularTags = await getTopPopularTags();
 
   return (
     <section className='background-light900_dark200 light-border
@@ -66,7 +58,7 @@ const RightSidebar = async () => {
                 key={tag._id}
                 _id={tag._id}
                 name={tag.name}
-                totalQuestion={tag.totalQuestion}
+                totalQuestion={tag.numberOfQuestions}
                 showCount
               />
             ))
