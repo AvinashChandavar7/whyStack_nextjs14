@@ -50,7 +50,10 @@ const LeftSidebar = () => {
                     : 'text-dark300_light900'
                   } flex items-center justify-start gap-4 bg-transparent p-4`
                 }>
-                <Image src={item.imgUrl} alt={item.label} width={20} height={20} loading="lazy" className={`${isActive ? "" : "invert-colors"}`} />
+                {/* <Image src={item.imgUrl} alt={item.label} width={20} height={20} loading="lazy" className={`${isActive ? "" : "invert-colors"}`} /> */}
+                <div className={`${isActive ? "" : "invert-colors"}`}>
+                  <Image src={item.imgUrl} alt={item.label} width={20} height={20} loading="lazy" />
+                </div>
                 <p className={`${isActive ? 'base-bold' : 'base-medium'} max-lg:hidden`}>
                   {item.label}
                 </p>
@@ -68,7 +71,10 @@ const LeftSidebar = () => {
             <Button className='small-medium btn-secondary 
                   min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none'
             >
-              <Image src="/assets/icons/account.svg" alt="sign-in" width={20} height={20} loading="lazy" className="invert-colors lg:hidden" />
+              <Image
+                src="/assets/icons/account.svg"
+                alt="sign-in" width={20} height={20} loading="lazy"
+                className="invert-colors lg:hidden" />
 
               <span className='primary-text-gradient max-lg:hidden'>
                 Log In

@@ -29,11 +29,11 @@ export async function getUserById(params: any) {
 
     const { userId } = params;
 
-    console.log(userId);
+    // console.log(userId);
 
     const user = await User.findOne({ clerkId: userId });
 
-    console.log(user);
+    // console.log(user);
 
     return user;
 
@@ -208,9 +208,6 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   }
 };
 
-
-
-
 export async function getUserInfo(params: GetUserByIdParams) {
   try {
     connectToDatabase();
@@ -221,9 +218,9 @@ export async function getUserInfo(params: GetUserByIdParams) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    // if (!user) {
-    //   throw new Error('User not Found');
-    // }
+    if (!user) {
+      throw new Error('User not Found');
+    }
 
 
     const totalQuestions = await Question.countDocuments({ author: user._id })
@@ -293,3 +290,5 @@ export async function getUserAnswer(params: GetUserStatsParams) {
     throw error;
   }
 };
+
+
