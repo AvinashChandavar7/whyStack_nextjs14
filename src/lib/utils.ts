@@ -1,43 +1,10 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import qs from "query-string"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
-
-// export const getTimeStamps = (createdAt: Date): string => {
-//   const now = new Date();
-
-//   if (!(createdAt instanceof Date) || isNaN(createdAt.getTime())) {
-//     // If createdAt is not a valid Date, return current timestamp
-//     return now.toISOString();
-//   }
-
-//   const timeDifference = Math.floor((now.getTime() - createdAt.getTime()) / 1000);
-
-//   const units = [
-//     { value: 31536000, label: 'year' },
-//     { value: 2592000, label: 'month' },
-//     { value: 86400, label: 'day' },
-//     { value: 3600, label: 'hour' },
-//     { value: 60, label: 'minute' },
-//     { value: 1, label: 'second' },
-//   ];
-
-//   for (const unit of units) {
-//     const count = Math.floor(timeDifference / unit.value);
-//     if (count > 0) {
-//       return count === 1
-//         ? `1 ${unit.label} ago`
-//         : `${count} ${unit.label}s ago`;
-//     }
-//   }
-
-//   return 'just now';
-// };
-
-
-
 
 export const getTimeStamp = (createdAt: Date): string => {
   const now = new Date();
@@ -75,9 +42,6 @@ export const getTimeStamp = (createdAt: Date): string => {
   return `${hours}:${minutes}`;
 };
 
-
-
-
 export const getFormatValue = (value: number): string => {
   const BILLION = 1e9;
   const MILLION = 1e6;
@@ -94,7 +58,6 @@ export const getFormatValue = (value: number): string => {
   }
 };
 
-
 export const getJoinedDate = (date: Date | string | null | undefined): string => {
   if (!date || isNaN(new Date(date).getTime())) {
     return 'Invalid Date';
@@ -109,3 +72,38 @@ export const getJoinedDate = (date: Date | string | null | undefined): string =>
 
   return joinedDate;
 };
+
+interface UrlQueryParams {
+  params: string;
+  key: string;
+  value: string | null;
+}
+interface RemoveUrlQueryParams {
+  params: string;
+  keysToRemove: string[];
+}
+
+export const formUrlQuery = ({ params, key, value }: UrlQueryParams) => {
+
+  const currentUrl = qs.parse(params);
+
+  currentUrl[key] = value;
+
+  return qs.stringifyUrl(
+    { url: window.location.pathname, query: currentUrl },
+    { skipNull: true }
+  );
+}
+export const removeKeysFromQuery = ({ params, keysToRemove }: RemoveUrlQueryParams) => {
+
+  const currentUrl = qs.parse(params);
+
+  keysToRemove.forEach((key) => {
+    delete currentUrl[key];
+  })
+
+  return qs.stringifyUrl(
+    { url: window.location.pathname, query: currentUrl },
+    { skipNull: true }
+  );
+}
