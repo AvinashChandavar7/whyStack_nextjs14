@@ -123,5 +123,5 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Error processing Clerk webhook event' }, { status: 500 });
   }
 
-  return new Response('', { status: 200 })
+  return NextResponse.json({ message: 'OK' });
 }
