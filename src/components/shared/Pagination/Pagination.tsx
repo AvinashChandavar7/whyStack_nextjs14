@@ -30,7 +30,7 @@ const Pagination = ({ pageNumber, isNext }: PaginationProps) => {
   };
 
   return (
-    <div className='mt-4 flex w-full items-center justify-center gap-2'>
+    <div className=' flex w-full items-center justify-center gap-2'>
       <Button
         disabled={pageNumber === 1}
         onClick={() => handleNavigation('prev')}
