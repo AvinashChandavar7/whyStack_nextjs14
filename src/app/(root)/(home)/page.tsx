@@ -25,7 +25,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     searchQuery: searchParams.q,
     filter: searchParams.filter,
     page: searchParams.page ? +searchParams.page : 1,
-
   });
 
   const results = JSON.parse(JSON.stringify(result));

@@ -11,6 +11,7 @@ import { getAnswer } from '@/lib/actions/answer.action';
 import Votes from '../Votes/Votes';
 import Filter from '../Filter/Filter';
 import ParseHTML from '../ParseHTML/ParseHTML';
+import Pagination from '../Pagination/Pagination';
 
 
 
@@ -98,6 +99,13 @@ const AllAnswers = async (
             </article>
           ))
         }
+      </div>
+
+      <div className="light-border border-b py-4">
+        <Pagination
+          pageNumber={page ? +page : 1}
+          isNext={result.isNext}
+        />
       </div>
 
     </div>

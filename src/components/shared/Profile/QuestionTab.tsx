@@ -4,6 +4,7 @@ import React from 'react';
 import { getUserQuestions } from '@/lib/actions/user.action';
 import { SearchParamsProps } from '@/types';
 import QuestionCard from '../Cards/QuestionCard';
+import Pagination from '../Pagination/Pagination';
 
 
 interface QuestionTabProps extends SearchParamsProps {
@@ -14,7 +15,10 @@ interface QuestionTabProps extends SearchParamsProps {
 const QuestionTab = async (
   { searchParams, userId, clerkId }: QuestionTabProps) => {
 
-  const result = await getUserQuestions({ userId, page: 1 })
+  const result = await getUserQuestions({
+    userId,
+    page: searchParams.page ? +searchParams.page : 1,
+  })
 
   const results = JSON.parse(JSON.stringify(result));
 
@@ -38,6 +42,13 @@ const QuestionTab = async (
             />
           ))
         }
+      </div>
+
+      <div className="m-6">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={results.isNext}
+        />
       </div>
     </>
   )

@@ -10,6 +10,7 @@ import QuestionCard from "@/components/shared/Cards/QuestionCard";
 
 import { getSavedQuestions } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
+import Pagination from "@/components/shared/Pagination/Pagination";
 
 
 export default async function Home({ searchParams }: SearchParamsProps) {
@@ -22,6 +23,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     clerkId: userId,
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   const results = JSON.parse(JSON.stringify(result));
@@ -79,6 +81,13 @@ export default async function Home({ searchParams }: SearchParamsProps) {
             />
           )
         }
+      </div>
+
+      <div className="m-6">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={results.isNext}
+        />
       </div>
     </>
   );
