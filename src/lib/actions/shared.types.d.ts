@@ -164,3 +164,11 @@ export interface ViewQuestionParams {
   questionId: string;
   userId: string | undefined;
 }
+
+
+// General Action
+
+export interface SearchParams {
+  query?: string | null;
+  type?: string | null;
+}

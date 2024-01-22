@@ -5,6 +5,8 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import GlobalFilters from './GlobalFilters';
+import { globalSearch } from '@/lib/actions/general.action';
 
 const GlobalResult = () => {
 
@@ -27,6 +29,11 @@ const GlobalResult = () => {
       setIsLoading(true);
       try {
         // Everything , Everywhere All at once...
+        const result = await globalSearch(
+          { query: global, type }
+        );
+
+        setResult(JSON.parse(result));
 
       } catch (error) {
         console.log(error)
@@ -34,10 +41,26 @@ const GlobalResult = () => {
         setIsLoading(false);
       }
     }
+
+    if (global) {
+      fetchResult();
+    }
+
   }, [global, type]);
 
   const renderLink = (type: string, id: string) => {
-    return '/';
+    switch (type) {
+      case 'question':
+        return `/question/${id}`;
+      case 'answer':
+        return `/question/${id}`;
+      case 'tag':
+        return `/tags/${id}`;
+      case 'user':
+        return `/profile/${id}`;
+      default:
+        return '/';
+    }
   }
 
 
@@ -47,11 +70,10 @@ const GlobalResult = () => {
     '>
 
       <p className='text-dark400_light900 px-5'>
-        Filters
+        <GlobalFilters />
       </p>
 
-      <div className='my-5 h-[1px] bg-light-700/50
-       dark:bg-dark-500/50'
+      <div className='my-5 h-[1px]  '
       >
         <div className='space-y-5 '>
           <p className='text-dark400_light900 px-5'>
@@ -70,17 +92,17 @@ const GlobalResult = () => {
                   </p>
                 </div>
               ) : (
-                <div className='flex flex-col gap-2 bg-slate-600'>
+                <div className='flex flex-col gap-2 rounded-md bg-slate-600'>
                   {
                     result.length > 0 ? (
                       result.map((item: any, index: number) => (
 
                         <Link
                           key={item.type + item.id + index}
-                          href={renderLink('type', 'id')}
+                          href={renderLink(item.type, item.id)}
                           className='flex w-full cursor-pointer 
-                          items-start gap-3 px-5 py-2.5
-                        hover:bg-light-700/50 dark:bg-dark-500/50'
+                          items-start gap-3 px-5 py-2.5 
+                        hover:bg-light-700/50 dark:bg-dark-500/50 '
                         >
                           <Image
                             src="/assets/icons/tag.svg" alt='tags'
@@ -99,7 +121,9 @@ const GlobalResult = () => {
                         </Link>
                       ))
                     ) : (
-                      <div className='flex-center flex-col px-5'>
+                      <div className='flex-center flex-col bg-light-700/50 
+                      px-5 dark:bg-dark-500/50
+                      '>
                         <p className='text-dark200_light800 body-regular px-5 py-2.5'>
                           Oops, no results found
                         </p>
