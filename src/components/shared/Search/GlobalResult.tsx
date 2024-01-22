@@ -69,17 +69,12 @@ const GlobalResult = () => {
     rounded-xl  bg-light-800 py-5 shadow-sm dark:bg-dark-400
     '>
 
-      <p className='text-dark400_light900 px-5'>
+      <p className='text-dark400_light900 px-5 '>
         <GlobalFilters />
       </p>
 
-      <div className='my-5 h-[1px]  '
-      >
-        <div className='space-y-5 '>
-          <p className='text-dark400_light900 px-5'>
-            Top Match
-          </p>
-
+      <div className='my-5 h-[1px] border dark:border-gray-500'>
+        <div className='mt-2 space-y-5'>
           {
             isLoading
               ? (
@@ -92,7 +87,10 @@ const GlobalResult = () => {
                   </p>
                 </div>
               ) : (
-                <div className='flex flex-col gap-2 rounded-md bg-slate-600'>
+                <div className='flex flex-col gap-2 rounded-md bg-slate-100 dark:bg-slate-600'>
+                  <p className='text-dark400_light900 px-5 py-1'>
+                    Top Match
+                  </p>
                   {
                     result.length > 0 ? (
                       result.map((item: any, index: number) => (
@@ -101,8 +99,8 @@ const GlobalResult = () => {
                           key={item.type + item.id + index}
                           href={renderLink(item.type, item.id)}
                           className='flex w-full cursor-pointer 
-                          items-start gap-3 px-5 py-2.5 
-                        hover:bg-light-700/50 dark:bg-dark-500/50 '
+                          items-start gap-3 px-5 py-2.5  
+                        hover:bg-light-800/80 dark:bg-dark-500/50 '
                         >
                           <Image
                             src="/assets/icons/tag.svg" alt='tags'
@@ -110,7 +108,7 @@ const GlobalResult = () => {
                             className='invert-colors mt-1 object-contain'
                           />
 
-                          <div className='flex flex-col text-white'>
+                          <div className='flex flex-col'>
                             <p className='body-medium text-dark200_light800 line-clamp-1'>
                               {item.title}
                             </p>
